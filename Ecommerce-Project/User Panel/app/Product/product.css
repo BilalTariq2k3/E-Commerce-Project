@@ -1,0 +1,29 @@
+.Product {
+  color: black;
+  background-color: whitesmoke;
+}
+
+.load-more button {
+  background-color: #270355;
+  color: aliceblue;
+  border-radius: 10px;
+}
+
+.heading {
+  text-align: center;
+}
+
+.filter-box {
+  background-color: #f8f9fa;
+  width: 80%;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.rounded-input {
+  border-radius: 8px;
+}
+
+.rounded-btn {
+  border-radius: 8px;
+}

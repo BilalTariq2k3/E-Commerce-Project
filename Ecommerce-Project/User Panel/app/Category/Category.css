@@ -1,0 +1,15 @@
+.Category {
+  color: black;
+  background-color: whitesmoke;
+  overflow-y: auto;
+}
+
+.load-more button {
+  background-color: #270355;
+  color: aliceblue;
+  border-radius: 10px;
+}
+
+.heading {
+  text-align: center; /* centers inline/inline-block children */
+}

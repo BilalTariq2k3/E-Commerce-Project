@@ -1,0 +1,21 @@
+.chart {
+  width: 100%;
+}
+
+.cart-wrapper {
+  width: 100%;
+}
+
+.cart-table {
+  width: 700px;
+}
+
+.cart-table th {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.cart-table td {
+  padding: 14px;
+  font-size: 15px;
+}
