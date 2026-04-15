@@ -1,7 +1,12 @@
 "use client";
 
-import Header from "../Header/Header";
+import dynamic from "next/dynamic";
 import Sidebar from "../Slidebar/Slidebar";
+
+const Header = dynamic(() => import("../Header/Header"), { ssr: false });
+const AdminChatWidget = dynamic(() => import("../chat/AdminChatWidget"), {
+  ssr: false,
+});
 
 export default function DashboardLayout({ children }) {
   return (
@@ -10,6 +15,7 @@ export default function DashboardLayout({ children }) {
       <div className="wrapper">
         <Header />
         <div className="dashboard-content">{children}</div>
+        <AdminChatWidget />
       </div>
     </div>
   );

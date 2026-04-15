@@ -1,46 +1,112 @@
-.header {
-  color: black;
-  background-color: white;
+.notif-wrapper {
+  position: relative;
 }
 
-.profile-circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
+.bell {
   cursor: pointer;
-  border: 2px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  font-size: 24px;
 }
 
-.profile-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+/* 🔔 icon default = white */
+.bell-icon {
+  color: white;
+  font-size: 26px;
+  transition: 0.3s;
 }
-.profile-dropdown {
+
+/* 🔴 when new message arrives */
+.bell-icon.active {
+  color: red;
+  animation: shake 0.4s ease-in-out;
+}
+
+/* badge */
+.count {
   position: absolute;
-  top: 60px;
-  right: 20px;
-  width: 180px;
+  top: -6px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* dropdown */
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 35px;
+  width: 260px;
   background: white;
-  border-radius: 8px;
-  padding: 8px 0;
-  z-index: 1000;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
 }
 
-.dropdown-item-custom {
-  padding: 10px 15px;
-  cursor: pointer;
+.dropdown h6 {
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
 }
 
-.dropdown-item-custom:hover {
-  background-color: #f1f1f1;
+.dropdown-list {
+  max-height: 210px;
+  overflow-y: auto;
+  margin-top: 8px;
 }
 
-.account {
-  text-decoration: none;
-  color: black;
+.dropdown-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 10px;
+}
+
+.item {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.notif-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-message {
+  color: #222;
+  word-break: break-word;
+}
+
+.notif-datetime {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.notif-delete {
+  flex-shrink: 0;
+}
+
+/* shake animation */
+@keyframes shake {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  75% { transform: rotate(5deg); }
+  100% { transform: rotate(0); }
 }

@@ -6,6 +6,7 @@ import { CategoryApi } from "../features/CategoryApi";
 import { UserApi } from "../features/UserApi";
 import { OrderApi } from "../features/OrderApi";
 import { DashboardApi } from "../features/DashboardApi";
+import { NotificationApi } from "../features/NotificationApi";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [UserApi.reducerPath]: UserApi.reducer,
     [OrderApi.reducerPath]: OrderApi.reducer,
     [DashboardApi.reducerPath]: DashboardApi.reducer,
+    [NotificationApi.reducerPath]: NotificationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -22,6 +24,7 @@ export const store = configureStore({
       UserApi.middleware,
       OrderApi.middleware,
       DashboardApi.middleware,
+      NotificationApi.middleware,
     ),
 });
 

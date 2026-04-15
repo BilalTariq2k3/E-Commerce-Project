@@ -17,6 +17,12 @@ export default function Login() {
 
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
+  const notice = searchParams.get("notice");
+  const callbackUrl = searchParams.get("callbackUrl");
+  const safeCallbackUrl =
+    callbackUrl && callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
+      ? callbackUrl
+      : "/admin/dashboard";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,7 +42,8 @@ export default function Login() {
         toast.error(res.error);
       }
     } else {
-      router.push("/admin/dashboard"); // redirect after login
+      router.replace(safeCallbackUrl);
+      router.refresh();
       toast.success("login successfully");
     }
   };
@@ -47,9 +54,15 @@ export default function Login() {
         <div className="col-md-6">
           <div className="card p-4">
             <div className="text-center mb-4">
-              <h2 className="fw-bold">E-SHOP</h2> 
+              <h2 className="fw-bold">E-SHOP</h2>
               <p>Admin Login Portal</p>
             </div>
+
+            {notice === "session_reset" && (
+              <p className="alert alert-info small" role="alert">
+                Your previous session was invalid or expired. Please sign in again.
+              </p>
+            )}
 
             <form onSubmit={handleLogin}>
               <div className="mb-3">

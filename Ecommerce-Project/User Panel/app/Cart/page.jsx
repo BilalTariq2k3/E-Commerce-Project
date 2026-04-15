@@ -2,7 +2,7 @@
 import "./cart.css";
 import DashboardLayout from "../Components/DashboardLayout/DashboardLayout";
 import CartCard from "../Components/CartCard/cartcard";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import PaymentMethodModal from "../Components/PaymentMethodModal/paymentMethodModal";
 import {
@@ -12,6 +12,11 @@ import {
   useGetCartQuery,
 } from "../Features/CartApi";
 import axios from "axios";
+
+import { io } from "socket.io-client";
+
+const SOCKET_URL =
+  process.env.NEXT_PUBLIC_SOCKET_URL ?? "http://127.0.0.1:5000";
 
 export default function Cart() {
   const [address, setAddress] = useState("");
@@ -23,9 +28,25 @@ export default function Cart() {
   const { data, isLoading, refetch } = useGetCartQuery();
   const cartdata = data?.data || [];
 
+  // console.log('adad',cartdata);
+
   const [deleteCart] = useClearCartMutation();
   const [createOrder] = useCreateOrderMutation();
   const [updateProduct] = useUpdateProductsMutation();
+
+  const socketRef = useRef(null);
+
+  useEffect(() => {
+    const s = io(SOCKET_URL, {
+      transports: ["websocket", "polling"],
+      reconnection: true,
+    });
+    socketRef.current = s;
+    return () => {
+      s.disconnect();
+      socketRef.current = null;
+    };
+  }, []);
 
   const sum = cartdata.reduce((a, b) => a + (b.totalprice || 0), 0);
 
@@ -106,6 +127,11 @@ export default function Cart() {
       } catch (error) {
         console.error(error.response?.data || error.message);
       }
+
+      socketRef.current?.emit("newOrder", {
+        userName: email,
+        total: sum,
+      });
 
       toast.success("Order confirmed!");
       setPaymentModal(false);

@@ -2,7 +2,10 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import connectDB from"./mongodb";
 import Admin from '../models/admin';
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
+
+// Trim so stray whitespace/newlines in .env cannot break JWT encrypt/decrypt
+const authSecret = process.env.NEXTAUTH_SECRET?.trim();
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -26,7 +29,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email not found");
         }
 
-        const isValid = await bcrypt.compare(
+        const isValid = await bcryptjs.compare(
           credentials.password,
           user.password,
         );
@@ -59,8 +62,8 @@ export const authOptions: NextAuthOptions = {
   },
 
   pages: {
-    signIn: "/admin/sign-in",
-    error: "/",
+    signIn: "/admin/login",
+    error: "/admin/login",
   },
 
   session: {
@@ -68,5 +71,9 @@ export const authOptions: NextAuthOptions = {
     maxAge: 400000,
   },
 
-  secret: process.env.NEXTAUTH_SECRET,
+  secret:
+    authSecret ||
+    (process.env.NODE_ENV === "development"
+      ? "dev-fallback-secret-change-this"
+      : undefined),
 };

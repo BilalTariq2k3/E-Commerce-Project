@@ -1,5 +1,6 @@
 import connectDB from "../../../lib/mongodb";
 import Order from "../../../model/order";
+import Notification from "../../../model/notification";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
@@ -25,6 +26,12 @@ export const POST = async (req) => {
       phone,
       totalbill,
       paymentmethod,
+    });
+
+    await Notification.create({
+      userId,
+      orderId: newOrder._id,
+      message: "Order placed",
     });
 
     return new Response(JSON.stringify(newOrder), {
